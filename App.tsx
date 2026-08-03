@@ -9,7 +9,7 @@ import { openDatabase } from "./src/db/database";
 export default function App() {
 	useEffect(() => {
 		async function init() {
-			await openDatabase();
+			const db = await openDatabase();
 		}
 		init();
 	}, []);
