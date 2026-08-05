@@ -1,5 +1,11 @@
 import * as SQLite from "expo-sqlite";
 
+export type Deck = {
+  id: number;
+  name: string;
+  chapter_number: number;
+};
+
 export async function insertDeck(
 	db: SQLite.SQLiteDatabase,
 	name: string,
@@ -13,7 +19,7 @@ export async function insertDeck(
 	return result.lastInsertRowId;
 }
 
-export async function getDecks(db: SQLite.SQLiteDatabase) {
-	const result = await db.getAllAsync("SELECT * FROM decks");
+export async function getDecks(db: SQLite.SQLiteDatabase): Promise<Deck[]> {
+	const result = await db.getAllAsync<Deck>("SELECT * FROM decks");
 	return result;
 }
