@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { router } from 'expo-router';
+import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 
 import { useEffect, useState } from "react";
+
 import { openDatabase } from "../src/db/database";
 import { insertDeck, getDecks, Deck } from "../src/db/decks";
 
@@ -33,7 +35,9 @@ export default function Home() {
 				data={decks}
 				keyExtractor={(item) => item.id.toString()}
 				renderItem={({ item }) => (
-					<Text style={styles.deck}>{item.name}</Text>
+					<Pressable onPress={() => router.push(`/deck/${item.id}`)}>
+						<Text style={styles.deck}>{item.name}</Text>
+					</Pressable>
 				)}
 			/>
 			<StatusBar style='auto' />
