@@ -1,12 +1,12 @@
 import * as SQLite from "expo-sqlite";
 
 export type Review = {
-  id: number;
-  card_id: number;
-  review_date: string;
-  quiz_type: string;
-  is_correct: number;
-  response_time_ms: number;
+	id: number;
+	card_id: number;
+	review_date: string;
+	quiz_type: string;
+	is_correct: number;
+	response_time_ms: number;
 };
 
 export async function insertReview(

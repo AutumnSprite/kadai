@@ -1,10 +1,13 @@
 import * as SQLite from "expo-sqlite";
 
+let dbInstance: SQLite.SQLiteDatabase | null = null;
+
 export async function openDatabase() {
-	//await SQLite.deleteDatabaseAsync("kadai.db");
-	const db = await SQLite.openDatabaseAsync("kadai.db");
+	//await SQLite.deleteDatabaseAsync("kadai.db");#
+	if (dbInstance) return dbInstance;
+	dbInstance = await SQLite.openDatabaseAsync("kadai.db");
 	
-	await db.execAsync(`
+	await dbInstance.execAsync(`
 		CREATE TABLE IF NOT EXISTS decks (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			name TEXT NOT NULL,
@@ -12,7 +15,7 @@ export async function openDatabase() {
 		);
 	`);
 
-	await db.execAsync(`
+	await dbInstance.execAsync(`
 		CREATE TABLE IF NOT EXISTS cards (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			deck_id INTEGER NOT NULL,
@@ -24,7 +27,7 @@ export async function openDatabase() {
 		);
 	`);
 
-	await db.execAsync(`
+	await dbInstance.execAsync(`
 		CREATE TABLE IF NOT EXISTS reviews (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			card_id INTEGER NOT NULL,
@@ -37,5 +40,5 @@ export async function openDatabase() {
 	`);
 
 	console.log("database ready: decks, cards, reviews");
-	return db;
+	return dbInstance;
 }

@@ -20,11 +20,11 @@ export default function DeckCards() {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.heading}>Cards</Text>
-			<Pressable
-				style={styles.learnButton}
-				onPress={() => router.push(`/deck/${id}/learn`)}
-			>
+			<Pressable style={styles.learnButton} onPress={() => router.push(`/deck/${id}/learn`)}>
 				<Text style={styles.learnButtonText}>Learn</Text>
+			</Pressable>
+			<Pressable style={styles.learnButton} onPress={() => router.push(`/deck/${id}/quiz`)}>
+				<Text style={styles.learnButtonText}>Quiz</Text>
 			</Pressable>
 			<FlatList
 				data={cards}
