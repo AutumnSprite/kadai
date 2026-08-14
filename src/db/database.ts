@@ -39,6 +39,16 @@ export async function openDatabase() {
 		);
 	`);
 
+	await dbInstance.execAsync(`
+		CREATE TABLE IF NOT EXISTS card_states (
+			card_id INTEGER PRIMARY KEY,
+			due_date TEXT NOT NULL,
+			interval_days INTEGER NOT NULL,
+			reps INTEGER NOT NULL,
+			FOREIGN KEY (card_id) REFERENCES cards(id)
+		);
+	`);
+
 	console.log("database ready: decks, cards, reviews");
 	return dbInstance;
 }
