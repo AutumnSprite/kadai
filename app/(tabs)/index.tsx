@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 
 import { useEffect, useState } from "react";
 
-import { openDatabase } from "../src/db/database";
-import { insertDeck, getDecks, Deck } from "../src/db/decks";
-import { seedCards } from "../src/db/cards";
-import { minnaChapter1 } from "../src/data/minna-ch1";
+import { openDatabase } from "../../src/db/database";
+import { insertDeck, getDecks, Deck } from "../../src/db/decks";
+import { seedCards } from "../../src/db/cards";
+import { minnaChapter1 } from "../../src/data/minna-ch1";
 
 
 export default function Home() {
