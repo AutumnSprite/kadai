@@ -1,5 +1,12 @@
 import * as SQLite from "expo-sqlite";
+import { Card } from "./cards"
 
+export type LearnedCard = Card & {
+	deck_name: string;
+	due_date: string;
+	interval_days: number;
+	reps: number;
+}
 
 export async function learnCard(db: SQLite.SQLiteDatabase, cardId: number) {
 	const dueDate = new Date();
@@ -47,4 +54,14 @@ export async function updateCardState(
 		interval,
 		reps
 	);
+}
+
+export async function getLearnedCards(db: SQLite.SQLiteDatabase): Promise<LearnedCard[]> {
+	return db.getAllAsync<LearnedCard>(
+		`SELECT cards.*, decks.name as deck_name, card_states.due_date, card_states.interval_days, card_states.reps
+		FROM card_states
+		JOIN cards ON cards.id = card_states.card_id
+		JOIN decks ON decks.id = cards.deck_id
+		ORDER BY card_states.due_date`
+	)
 }
