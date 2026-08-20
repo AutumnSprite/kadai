@@ -5,6 +5,7 @@ export default function TabsLayout() {
 		<Tabs>
 			<Tabs.Screen name="index" options={{ title: "Decks" }} />
 			<Tabs.Screen name="learned" options={{ title: "Learned" }} />
+			<Tabs.Screen name="review" options={{title: "Review"}} />
 		</Tabs>
 	);
 }

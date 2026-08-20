@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from "react-native";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { openDatabase } from "../../src/db/database";
 import { getLearnedCards, LearnedCard } from "../../src/db/cardStates";
 
@@ -8,13 +9,15 @@ export default function Learned() {
 	const [query, setQuery] = useState("");
 	const [sort, setSort] = useState<"due" | "reps">("due");
 
-	useEffect(() => {
-		async function load() {
-			const db = await openDatabase();
-			setCards(await getLearnedCards(db));
-		}
-		load();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			async function load() {
+				const db = await openDatabase();
+				setCards(await getLearnedCards(db));
+			}
+			load();
+		}, [])
+	);
 
 	const filtered = cards.filter((c) => 
 		c.japanese.includes(query) ||
