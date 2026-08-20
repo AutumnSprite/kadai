@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import { useLocalSearchParams, router } from "expo-router";
+
 import { openDatabase } from "../../../src/db/database";
 import { getCards, Card } from "../../../src/db/cards";
 
