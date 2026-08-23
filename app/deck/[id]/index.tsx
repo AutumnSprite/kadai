@@ -1,26 +1,31 @@
 import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 import { useEffect, useState } from "react";
-import { useLocalSearchParams, router } from "expo-router";
+import { useLocalSearchParams, router, Stack } from "expo-router";
 
 import { openDatabase } from "../../../src/db/database";
 import { getCards, Card } from "../../../src/db/cards";
+import { getDeck } from "../../../src/db/decks";
 
 export default function DeckCards() {
 	const { id } = useLocalSearchParams();
 	const [cards, setCards] = useState<Card[]>([]);
+	const [deckName, setDeckName] = useState("");
 
 	useEffect(() => {
 		async function load() {
 			const db = await openDatabase();
 			const loaded = await getCards(db, Number(id));
 			setCards(loaded);
+			const deck = await getDeck(db, Number(id));
+			if (deck) setDeckName(deck.name);
 		}
 		load();
 	}, [id]);
 
 	return (
+		<>
+		<Stack.Screen options={{ title: deckName }} />
 		<View style={styles.container}>
-			<Text style={styles.heading}>Cards</Text>
 			<Pressable style={styles.learnButton} onPress={() => router.push(`/deck/${id}/learn`)}>
 				<Text style={styles.learnButtonText}>Learn</Text>
 			</Pressable>
@@ -39,12 +44,12 @@ export default function DeckCards() {
 				)}
 			/>
 		</View>
+		</>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: { flex: 1, backgroundColor: "#fff", paddingTop: 60, paddingHorizontal: 20 },
-	heading: { fontSize: 28, fontWeight: "bold", marginBottom: 16 },
 	card: { paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: "#eee" },
 	japanese: { fontSize: 22 },
 	reading: { fontSize: 16, color: "#666" },

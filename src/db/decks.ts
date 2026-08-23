@@ -23,3 +23,7 @@ export async function getDecks(db: SQLite.SQLiteDatabase): Promise<Deck[]> {
 	const result = await db.getAllAsync<Deck>("SELECT * FROM decks");
 	return result;
 }
+
+export async function getDeck(db: SQLite.SQLiteDatabase, id: number): Promise<Deck | null> {
+  return db.getFirstAsync<Deck>("SELECT * FROM decks WHERE id = ?", id);
+}
