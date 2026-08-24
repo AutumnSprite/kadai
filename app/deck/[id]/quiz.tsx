@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 import { openDatabase } from "../../../src/db/database";
 import { getCards, Card } from "../../../src/db/cards";
@@ -48,6 +48,8 @@ export default function Quiz() {
 	}
 
 	return (
+		<>
+		<Stack.Screen options={{ title: "Quiz"}}/>
 		<View style={styles.container}>
 			<Text style={styles.japanese}>{cards[index].japanese}</Text>
 			{options.map((option) => {
@@ -68,6 +70,7 @@ export default function Quiz() {
 				</Pressable>
 			)}
 		</View>
+		</>
 	);
 }
 

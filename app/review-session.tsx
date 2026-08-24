@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useState, useEffect } from "react";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 
 import { openDatabase } from "../src/db/database";
 import { getDueCards, reviewCard, LearnedCard, Grade } from "../src/db/cardStates";
@@ -43,6 +43,8 @@ export default function ReviewSession() {
 	}
 
 	return (
+		<>
+		<Stack.Screen options={{ title: "Review"}}/>
 		<View style={styles.container}>
 		<Text style={styles.progress}>{index + 1} / {cards.length}</Text>
 		<Pressable style={styles.card} onPress={() => setFlipped(!flipped)}>
@@ -65,6 +67,7 @@ export default function ReviewSession() {
 			</View>
 		)}
 		</View>
+		</>
 	);
 }
 

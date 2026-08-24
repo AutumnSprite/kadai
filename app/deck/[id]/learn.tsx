@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 
 import { openDatabase } from "../../../src/db/database";
 import { getCards, Card } from "../../../src/db/cards";
@@ -65,6 +65,8 @@ export default function Learn() {
 
 	if (showSummary) {
 		return (
+			<>
+			<Stack.Screen options={{ title: "Learn" }} />
 			<ScrollView style={styles.summary} contentContainerStyle={{ padding: 20 }}>
 			<Text style={styles.heading}>Select words to learn</Text>
 			{cards.map((c) => (
@@ -77,10 +79,13 @@ export default function Learn() {
 				<Text style={styles.nextButtonText}>Learn selected ({selected.size})</Text>
 			</Pressable>
 			</ScrollView>
+			</>
 		);
 	}
 
 	return (
+		<>
+		<Stack.Screen options={{ title: "Learn" }} />
 		<View style={styles.container}>
 			<Text style={styles.progress}>
 				{index + 1} / {cards.length}
@@ -101,6 +106,7 @@ export default function Learn() {
 				<Text style={styles.nextButtonText}>Next</Text>
 			</Pressable>
 		</View>
+		</>
 	);
 }
 
