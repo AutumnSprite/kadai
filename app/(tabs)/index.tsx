@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 
 import { useEffect, useState } from "react";
 
+import { colors, spacing } from "../../src/theme";
 import { openDatabase } from "../../src/db/database";
 import { insertDeck, getDecks, Deck } from "../../src/db/decks";
 import { seedCards } from "../../src/db/cards";
@@ -36,15 +37,17 @@ export default function Home() {
 		<View style={styles.container}>
 			<Text style={styles.heading}>Decks</Text>
 			<FlatList
-				data={decks}
-				keyExtractor={(item) => item.id.toString()}
-				renderItem={({ item }) => (
-					<Pressable onPress={() => router.push(`/deck/${item.id}`)}>
-						<Text style={styles.deck}>{item.name}</Text>
-					</Pressable>
-				)}
+			data={decks}
+			keyExtractor={(item) => item.id.toString()}
+			contentContainerStyle={{ gap: spacing.md }}
+			renderItem={({ item }) => (
+				<Pressable style={styles.deck} onPress={() => router.push(`/deck/${item.id}`)}>
+				<Text style={styles.deckName}>{item.name}</Text>
+				<Text style={styles.deckMeta}>Chapter {item.chapter_number}</Text>
+				</Pressable>
+			)}
 			/>
-			<StatusBar style='auto' />
+			<StatusBar style="auto" />
 		</View>
 	);
 }
@@ -52,19 +55,31 @@ export default function Home() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: colors.bg,
 		paddingTop: 60,
-		paddingHorizontal: 20,
+		paddingHorizontal: spacing.lg,
 	},
 	heading: {
-		fontSize: 28,
-		fontWeight: 'bold',
-		marginBottom: 16,
+		fontSize: 32,
+		fontWeight: "700",
+		color: colors.text,
+		marginBottom: spacing.lg,
 	},
 	deck: {
+		backgroundColor: colors.surface,
+		padding: spacing.lg,
+		borderRadius: 12,
+		borderWidth: 1,
+		borderColor: colors.border,
+	},
+	deckName: {
 		fontSize: 18,
-		paddingVertical: 12,
-		borderBottomWidth: 1,
-		borderBottomColor: '#eee',
+		fontWeight: "600",
+		color: colors.text,
+	},
+	deckMeta: {
+		fontSize: 14,
+		color: colors.muted,
+		marginTop: 4,
 	},
 });
