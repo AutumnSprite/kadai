@@ -5,6 +5,7 @@ import { router, Stack } from "expo-router";
 
 import { openDatabase } from "../src/db/database";
 import { getDueCards, reviewCard, LearnedCard, Grade } from "../src/db/cardStates";
+import { colors, spacing } from "../src/theme";
 
 export default function ReviewSession() {
 	const [db, setDb] = useState<SQLite.SQLiteDatabase | null>(null);
@@ -60,10 +61,10 @@ export default function ReviewSession() {
 
 		{flipped && (
 			<View style={styles.grades}>
-				<Pressable style={[styles.grade, { backgroundColor: "#fecaca" }]} onPress={() => grade("again")}><Text>Again</Text></Pressable>
-				<Pressable style={[styles.grade, { backgroundColor: "#fed7aa" }]} onPress={() => grade("hard")}><Text>Hard</Text></Pressable>
-				<Pressable style={[styles.grade, { backgroundColor: "#bbf7d0" }]} onPress={() => grade("good")}><Text>Good</Text></Pressable>
-				<Pressable style={[styles.grade, { backgroundColor: "#bfdbfe" }]} onPress={() => grade("easy")}><Text>Easy</Text></Pressable>
+				<Pressable style={[styles.grade, { backgroundColor: colors.again }]} onPress={() => grade("again")}><Text style={styles.gradeText}>Again</Text></Pressable>
+				<Pressable style={[styles.grade, { backgroundColor: colors.hard }]} onPress={() => grade("hard")}><Text style={styles.gradeText}>Hard</Text></Pressable>
+				<Pressable style={[styles.grade, { backgroundColor: colors.good }]} onPress={() => grade("good")}><Text style={styles.gradeText}>Good</Text></Pressable>
+				<Pressable style={[styles.grade, { backgroundColor: colors.easy }]} onPress={() => grade("easy")}><Text style={styles.gradeText}>Easy</Text></Pressable>
 			</View>
 		)}
 		</View>
@@ -72,15 +73,16 @@ export default function ReviewSession() {
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1, backgroundColor: "#fff", paddingTop: 40, paddingHorizontal: 20, alignItems: "center" },
-	done: { fontSize: 24, marginTop: 80, marginBottom: 24 },
-	progress: { fontSize: 16, color: "#666", marginBottom: 20 },
-	card: { width: "100%", height: 280, borderWidth: 1, borderColor: "#ddd", borderRadius: 12, justifyContent: "center", alignItems: "center", marginBottom: 24 },
-	japanese: { fontSize: 48 },
-	reading: { fontSize: 28, color: "#666", textAlign: "center", marginBottom: 8 },
-	english: { fontSize: 24, textAlign: "center" },
-	grades: { flexDirection: "row", gap: 8 },
-	grade: { paddingVertical: 14, paddingHorizontal: 16, borderRadius: 8 },
-	button: { backgroundColor: "#2563eb", paddingVertical: 14, paddingHorizontal: 40, borderRadius: 8 },
-	buttonText: { color: "#fff", fontSize: 18, fontWeight: "600" },
+	container: { flex: 1, backgroundColor: colors.bg, paddingTop: 40, paddingHorizontal: spacing.lg, alignItems: "center" },
+	done: { fontSize: 24, color: colors.text, marginTop: 80, marginBottom: spacing.lg },
+	progress: { fontSize: 16, color: colors.muted, marginBottom: spacing.lg },
+	card: { width: "100%", height: 280, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: 16, justifyContent: "center", alignItems: "center", marginBottom: spacing.lg },
+	japanese: { fontSize: 52, color: colors.text },
+	reading: { fontSize: 28, color: colors.muted, textAlign: "center", marginBottom: 8 },
+	english: { fontSize: 24, color: colors.text, textAlign: "center" },
+	grades: { flexDirection: "row", gap: spacing.sm },
+	grade: { flex: 1, paddingVertical: 16, borderRadius: 10, alignItems: "center" },
+	gradeText: { color: colors.accentText, fontSize: 15, fontWeight: "600" },
+	button: { backgroundColor: colors.accent, paddingVertical: 14, paddingHorizontal: 40, borderRadius: 10 },
+	buttonText: { color: colors.accentText, fontSize: 18, fontWeight: "600" },
 });

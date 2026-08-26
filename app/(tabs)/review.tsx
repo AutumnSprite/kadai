@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useState, useCallback } from "react";
 import { useFocusEffect, router } from "expo-router";
+
 import { openDatabase } from "../../src/db/database";
 import { getDueCards } from "../../src/db/cardStates";
+import { colors, spacing } from "../../src/theme";
 
 export default function Review() {
 	const [dueCount, setDueCount] = useState(0);
@@ -34,10 +36,10 @@ export default function Review() {
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" },
-	count: { fontSize: 72, fontWeight: "bold" },
-	label: { fontSize: 20, color: "#666", marginBottom: 40 },
-	button: { backgroundColor: "#2563eb", paddingVertical: 16, paddingHorizontal: 48, borderRadius: 10 },
-	disabled: { backgroundColor: "#ccc" },
-	buttonText: { color: "#fff", fontSize: 20, fontWeight: "600" },
+	container: { flex: 1, backgroundColor: colors.bg, justifyContent: "center", alignItems: "center" },
+	count: { fontSize: 88, fontWeight: "700", color: colors.text },
+	label: { fontSize: 18, color: colors.muted, marginBottom: spacing.xl },
+	button: { backgroundColor: colors.accent, paddingVertical: 16, paddingHorizontal: 48, borderRadius: 12 },
+	disabled: { backgroundColor: colors.border },
+	buttonText: { color: colors.accentText, fontSize: 20, fontWeight: "600" },
 });
