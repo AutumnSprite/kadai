@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
+
 import { openDatabase } from "../../src/db/database";
 import { getLearnedCards, LearnedCard } from "../../src/db/cardStates";
+import { colors, spacing } from "../../src/theme";
 
 export default function Learned() {
 	const [cards, setCards] = useState<LearnedCard[]>([]);
@@ -31,7 +33,7 @@ export default function Learned() {
 	});
 
 	return (
-		<ScrollView style={styles.container} contentContainerStyle={{ padding: 20 }}>
+		<ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg, paddingTop: 60 }}>
 		<Text style={styles.heading}>Learned Cards</Text>
 		<TextInput style={styles.search} value={query} onChangeText={setQuery}/>
 		<View style={styles.sortRow}>
@@ -56,14 +58,14 @@ export default function Learned() {
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1, backgroundColor: "#fff" },
-	heading: { fontSize: 24, fontWeight: "bold", marginBottom: 16 },
-	row: { paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: "#eee" },
-	jp: { fontSize: 18 },
-	meta: { fontSize: 14, color: "#666", marginTop: 2 },
-	search: { borderWidth: 1, borderColor: "#ddd", borderRadius: 8, padding: 10, marginBottom: 16, fontSize: 16 },
-	sortRow: { flexDirection: "row", gap: 12, marginBottom: 16 },
-	sortBtn: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 6, backgroundColor: "#f3f4f6" },
-	sortText: { color: "#666" },
-	sortActive: { color: "#2563eb", fontWeight: "600" },
+	container: { flex: 1, backgroundColor: colors.bg },
+	heading: { fontSize: 28, fontWeight: "700", color: colors.text, marginBottom: spacing.md },
+	row: { backgroundColor: colors.surface, padding: spacing.md, borderRadius: 12, borderWidth: 1, borderColor: colors.border, marginBottom: spacing.sm },
+	jp: { fontSize: 18, color: colors.text },
+	meta: { fontSize: 13, color: colors.muted, marginTop: 2 },
+	search: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: 10, padding: 12, marginBottom: spacing.md, fontSize: 16, color: colors.text },
+	sortRow: { flexDirection: "row", gap: spacing.sm, marginBottom: spacing.md },
+	sortBtn: { paddingVertical: 8, paddingHorizontal: 14, borderRadius: 8, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
+	sortText: { color: colors.muted },
+	sortActive: { color: colors.accent, fontWeight: "600" },
 });
