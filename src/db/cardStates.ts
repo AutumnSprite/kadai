@@ -73,7 +73,7 @@ export async function reviewCard(
 		cardId
 	);
 
-	const prevInterval = existing ? existing.interval_days : 1;
+	const prevInterval = existing ? Math.max(1, existing.interval_days) : 1;
 	const reps = existing ? existing.reps + 1 : 1;
 
 	let interval: number;
