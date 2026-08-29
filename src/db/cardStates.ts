@@ -107,3 +107,29 @@ export async function getDueCards(db: SQLite.SQLiteDatabase): Promise<LearnedCar
 		now
 	);
 }
+
+export async function rescheduleCard(
+  	db: SQLite.SQLiteDatabase,
+	cardId: number,
+	intervalDays: number
+) {
+	const dueDate = new Date();
+	dueDate.setDate(dueDate.getDate() + intervalDays);
+	await db.runAsync(
+		`UPDATE card_states SET due_date = ?, interval_days = ? WHERE card_id = ?`,
+		dueDate.toISOString(),
+		intervalDays,
+		cardId
+	);
+}
+
+export async function getLearnedCard(db: SQLite.SQLiteDatabase, cardId: number): Promise<LearnedCard | null> {
+	return db.getFirstAsync<LearnedCard>(
+		`SELECT cards.*, decks.name as deck_name, card_states.due_date, card_states.interval_days, card_states.reps
+		FROM card_states
+		JOIN cards ON cards.id = card_states.card_id
+		JOIN decks ON decks.id = cards.deck_id
+		WHERE cards.id = ?`,
+		cardId
+	);
+}

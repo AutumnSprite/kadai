@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from "react-native";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, router } from "expo-router";
 import { useCallback, useState } from "react";
 
 import { openDatabase } from "../../src/db/database";
@@ -45,13 +45,13 @@ export default function Learned() {
 			</Pressable>
 		</View>
 		{sorted.map((c) => (
-			<View key={c.id} style={styles.row}>
+			<Pressable key={c.id} style={styles.row} onPress={() => router.push(`/card/${c.id}`)}>
 				<Text style={styles.jp}>{c.japanese} — {c.english}</Text>
 				<Text style={styles.meta}>{c.deck_name}</Text>
 				<Text style={styles.meta}>
 					Due: {new Date(c.due_date).toLocaleDateString()} · Interval: {c.interval_days}d · Reps: {c.reps}
 				</Text>
-			</View>
+			</Pressable>
 		))}
 		</ScrollView>
 	);
