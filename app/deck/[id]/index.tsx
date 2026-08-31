@@ -5,6 +5,7 @@ import { useLocalSearchParams, router, Stack } from "expo-router";
 import { openDatabase } from "../../../src/db/database";
 import { getCards, Card } from "../../../src/db/cards";
 import { getDeck } from "../../../src/db/decks";
+import { colors, spacing } from "../../../src/theme";
 
 export default function DeckCards() {
 	const { id } = useLocalSearchParams();
@@ -26,12 +27,14 @@ export default function DeckCards() {
 		<>
 		<Stack.Screen options={{ title: deckName }} />
 		<View style={styles.container}>
-			<Pressable style={styles.learnButton} onPress={() => router.push(`/deck/${id}/learn`)}>
-				<Text style={styles.learnButtonText}>Learn</Text>
-			</Pressable>
-			<Pressable style={styles.learnButton} onPress={() => router.push(`/deck/${id}/quiz`)}>
-				<Text style={styles.learnButtonText}>Quiz</Text>
-			</Pressable>
+			<View style={styles.buttonRow}>
+				<Pressable style={styles.actionButton} onPress={() => router.push(`/deck/${id}/learn`)}>
+					<Text style={styles.actionButtonText}>Learn</Text>
+				</Pressable>
+				<Pressable style={styles.actionButton} onPress={() => router.push(`/deck/${id}/quiz`)}>
+					<Text style={styles.actionButtonText}>Quiz</Text>
+				</Pressable>
+			</View>
 			<FlatList
 				data={cards}
 				keyExtractor={(item) => item.id.toString()}
@@ -49,21 +52,12 @@ export default function DeckCards() {
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1, backgroundColor: "#fff", paddingTop: 60, paddingHorizontal: 20 },
-	card: { paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: "#eee" },
-	japanese: { fontSize: 22 },
-	reading: { fontSize: 16, color: "#666" },
-	english: { fontSize: 16 },
-	learnButton: {
-		backgroundColor: "#2563eb",
-		paddingVertical: 14,
-		borderRadius: 8,
-		alignItems: "center",
-		marginBottom: 20,
-	},
-	learnButtonText: {
-		color: "#fff",
-		fontSize: 18,
-		fontWeight: "600",
-	},
+	container: { flex: 1, backgroundColor: colors.bg, paddingTop: spacing.lg, paddingHorizontal: spacing.lg },
+	buttonRow: { flexDirection: "row", gap: spacing.sm, marginBottom: spacing.lg },
+	actionButton: { flex: 1, backgroundColor: colors.accent, paddingVertical: 14, borderRadius: 10, alignItems: "center" },
+	actionButtonText: { color: colors.accentText, fontSize: 18, fontWeight: "600" },
+	card: { backgroundColor: colors.surface, padding: spacing.md, borderRadius: 12, borderWidth: 1, borderColor: colors.border, marginBottom: spacing.sm },
+	japanese: { fontSize: 22, color: colors.text },
+	reading: { fontSize: 15, color: colors.muted, marginTop: 2 },
+	english: { fontSize: 16, color: colors.text, marginTop: 2 },
 });
