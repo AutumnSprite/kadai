@@ -6,6 +6,7 @@ import { router, Stack, useLocalSearchParams } from "expo-router";
 import { openDatabase } from "../../../src/db/database";
 import { getCards, Card } from "../../../src/db/cards";
 import { learnCard } from "../../../src/db/cardStates";
+import { colors, spacing } from "../../../src/theme";
 
 export default function Learn() {
 	const { id } = useLocalSearchParams();
@@ -111,28 +112,29 @@ export default function Learn() {
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1, backgroundColor: "#fff", paddingTop: 40, paddingHorizontal: 20, alignItems: "center" },
-	info: { fontSize: 18, marginTop: 40 },
-	progress: { fontSize: 16, color: "#666", marginBottom: 20 },
+	container: { flex: 1, backgroundColor: colors.bg, paddingTop: spacing.xl, paddingHorizontal: spacing.lg, alignItems: "center" },
+	info: { fontSize: 18, color: colors.muted, marginTop: spacing.xl },
+	progress: { fontSize: 16, color: colors.muted, marginBottom: spacing.lg },
 	card: {
 		width: "100%",
 		height: 300,
+		backgroundColor: colors.surface,
 		borderWidth: 1,
-		borderColor: "#ddd",
-		borderRadius: 12,
+		borderColor: colors.border,
+		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center",
-		marginBottom: 30,
+		marginBottom: spacing.lg,
 	},
-	japanese: { fontSize: 48 },
+	japanese: { fontSize: 52, color: colors.text },
 	back: { alignItems: "center" },
-	reading: { fontSize: 28, color: "#666", marginBottom: 12 },
-	english: { fontSize: 24 },
-	nextButton: { backgroundColor: "#2563eb", paddingVertical: 14, paddingHorizontal: 40, borderRadius: 8 },
-	nextButtonText: { color: "#fff", fontSize: 18, fontWeight: "600" },
-	summary: { flex: 1, backgroundColor: "#fff" },
-	heading: { fontSize: 24, fontWeight: "bold", marginBottom: 16 },
-	row: { flexDirection: "row", alignItems: "center", paddingVertical: 12 },
-	check: { fontSize: 24, marginRight: 12 },
-	rowText: { fontSize: 18 },
+	reading: { fontSize: 28, color: colors.muted, marginBottom: spacing.sm },
+	english: { fontSize: 24, color: colors.text },
+	nextButton: { backgroundColor: colors.accent, paddingVertical: 14, paddingHorizontal: 40, borderRadius: 10 },
+	nextButtonText: { color: colors.accentText, fontSize: 18, fontWeight: "600" },
+	summary: { flex: 1, backgroundColor: colors.bg },
+	heading: { fontSize: 26, fontWeight: "700", color: colors.text, marginBottom: spacing.md },
+	row: { flexDirection: "row", alignItems: "center", paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border },
+	check: { fontSize: 24, marginRight: spacing.md, color: colors.accent },
+	rowText: { fontSize: 18, color: colors.text },
 });
