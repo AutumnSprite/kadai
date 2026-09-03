@@ -1,7 +1,8 @@
 import * as SQLite from "expo-sqlite";
+import * as Speech from "expo-speech";
 import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";	
 
 import { openDatabase } from "../../../src/db/database";
 import { getCards, Card } from "../../../src/db/cards";
@@ -38,6 +39,10 @@ export default function Learn() {
 	}
 
 	const card = cards[index];
+
+	function speak() {
+		Speech.speak(card.reading, { language: "ja" });
+	}
 
 	function nextCard() {
 		setFlipped(false);
@@ -102,7 +107,9 @@ export default function Learn() {
 					</View>
 				)}
 			</Pressable>
-
+			<Pressable style={styles.speakButton} onPress={speak}>
+				<Text style={styles.speakText}>🔊 Play</Text>
+			</Pressable>
 			<Pressable style={styles.nextButton} onPress={nextCard}>
 				<Text style={styles.nextButtonText}>Next</Text>
 			</Pressable>
@@ -137,4 +144,6 @@ const styles = StyleSheet.create({
 	row: { flexDirection: "row", alignItems: "center", paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border },
 	check: { fontSize: 24, marginRight: spacing.md, color: colors.accent },
 	rowText: { fontSize: 18, color: colors.text },
+	speakButton: { paddingVertical: 10, paddingHorizontal: 20, borderRadius: 8, borderWidth: 1, borderColor: colors.border, marginBottom: spacing.md },
+	speakText: { fontSize: 16, color: colors.text },
 });
