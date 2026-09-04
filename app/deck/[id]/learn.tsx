@@ -44,6 +44,12 @@ export default function Learn() {
 		Speech.speak(card.reading, { language: "ja" });
 	}
 
+	function flip() {
+		const nowFlipped = !flipped;
+		setFlipped(nowFlipped);
+		if (nowFlipped) speak();
+	}
+
 	function nextCard() {
 		setFlipped(false);
 		if (index + 1 >= cards.length){
@@ -97,7 +103,7 @@ export default function Learn() {
 				{index + 1} / {cards.length}
 			</Text>
 
-			<Pressable style={styles.card} onPress={() => setFlipped(!flipped)}>
+			<Pressable style={styles.card} onPress={flip}>
 				{!flipped ? (
 					<Text style={styles.japanese}>{card.japanese}</Text>
 				) : (

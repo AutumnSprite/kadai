@@ -1,4 +1,5 @@
 import * as SQLite from "expo-sqlite";
+import * as Speech from "expo-speech";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useState, useEffect } from "react";
 import { router, Stack } from "expo-router";
@@ -37,6 +38,16 @@ export default function ReviewSession() {
 
 	const card = cards[index];
 
+	function speak() {
+		Speech.speak(card.reading, { language: "ja" });
+	}
+
+	function flip() {
+		const nowFlipped = !flipped;
+		setFlipped(nowFlipped);
+		if (nowFlipped) speak();
+	}
+	
 	async function grade(g: Grade) {
 		if (db) await reviewCard(db, card.id, g);
 		setFlipped(false);
@@ -48,7 +59,7 @@ export default function ReviewSession() {
 		<Stack.Screen options={{ title: "Review"}}/>
 		<View style={styles.container}>
 		<Text style={styles.progress}>{index + 1} / {cards.length}</Text>
-		<Pressable style={styles.card} onPress={() => setFlipped(!flipped)}>
+		<Pressable style={styles.card} onPress={flip}>
 			{!flipped ? (
 			<Text style={styles.japanese}>{card.japanese}</Text>
 			) : (
@@ -59,6 +70,9 @@ export default function ReviewSession() {
 			)}
 		</Pressable>
 
+		<Pressable style={styles.speakButton} onPress={speak}>
+			<Text style={styles.speakText}>🔊 Play</Text>
+		</Pressable>
 		{flipped && (
 			<View style={styles.grades}>
 				<Pressable style={[styles.grade, { backgroundColor: colors.again }]} onPress={() => grade("again")}><Text style={styles.gradeText}>Again</Text></Pressable>
@@ -85,4 +99,6 @@ const styles = StyleSheet.create({
 	gradeText: { color: colors.accentText, fontSize: 15, fontWeight: "600" },
 	button: { backgroundColor: colors.accent, paddingVertical: 14, paddingHorizontal: 40, borderRadius: 10 },
 	buttonText: { color: colors.accentText, fontSize: 18, fontWeight: "600" },
+	speakButton: { paddingVertical: 10, paddingHorizontal: 20, borderRadius: 8, borderWidth: 1, borderColor: colors.border, marginBottom: spacing.md },
+	speakText: { fontSize: 16, color: colors.text },
 });
